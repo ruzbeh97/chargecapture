@@ -50,7 +50,12 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
         editorRef.current.innerHTML = initialData.html
         // Restore magic word dropdowns state
         if (initialData.alternateWordDropdowns && initialData.alternateWordDropdowns.length > 0) {
-          setAlternateWordDropdowns(initialData.alternateWordDropdowns)
+          // Map to ensure position is set (null if undefined) to match AlternateWordDropdownData type
+          setAlternateWordDropdowns(initialData.alternateWordDropdowns.map(d => ({
+            id: d.id,
+            words: d.words,
+            position: d.position !== undefined ? d.position : null
+          })))
         }
         // Reattach click handlers to placeholders
         setTimeout(() => {

@@ -13,9 +13,10 @@ interface AlternateWordDropdownProps {
   onClose: () => void
   onAddWord: (word: string, isDefault: boolean) => void
   existingWords: AlternateWord[]
-  onUpdateWord?: (id: string, word: string, isDefault: boolean) => void
   onDeleteWord: (id: string) => void
   onReorderWords: (reorderedWords: AlternateWord[]) => void
+  // onUpdateWord is passed but not used in this component
+  onUpdateWord?: (id: string, word: string, isDefault: boolean) => void
 }
 
 function AlternateWordDropdown({
@@ -23,9 +24,9 @@ function AlternateWordDropdown({
   onClose,
   onAddWord,
   existingWords,
-  onUpdateWord,
   onDeleteWord,
-  onReorderWords
+  onReorderWords,
+  onUpdateWord: _onUpdateWord // Prefix with underscore to indicate intentionally unused
 }: AlternateWordDropdownProps) {
   const [newWord, setNewWord] = useState('')
   const [enableDefault, setEnableDefault] = useState(false)
