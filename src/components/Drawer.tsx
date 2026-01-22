@@ -35,6 +35,7 @@ interface AdvancedViewData {
         word: string
         isDefault: boolean
       }>
+      position?: { top: number; left: number } | null
     }>
   }
 }

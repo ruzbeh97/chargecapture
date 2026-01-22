@@ -4,7 +4,11 @@ import './TextSnippetComponent.css'
 
 interface TextSnippetData {
   html: string
-  alternateWordDropdowns: AlternateWordDropdownData[]
+  alternateWordDropdowns: Array<{
+    id: string
+    words: AlternateWord[]
+    position?: { top: number; left: number } | null
+  }>
 }
 
 interface TextSnippetComponentProps {
@@ -31,7 +35,6 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
   const [alternateWordDropdowns, setAlternateWordDropdowns] = useState<AlternateWordDropdownData[]>([])
   const [activeDropdownId, setActiveDropdownId] = useState<string | null>(null)
   const editorRef = useRef<HTMLDivElement>(null)
-  const hasInitializedRef = useRef(false)
 
   // Track the last initialData to prevent unnecessary resets
   const lastInitialDataRef = useRef<string | undefined>(undefined)
@@ -106,10 +109,10 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
           
           // Update full data including HTML and magic words
           if (onDataChange) {
-            // Use current alternateWordDropdowns from state
+            // Use current alternateWordDropdowns from state, excluding position for saved data
             onDataChange({
               html,
-              alternateWordDropdowns: alternateWordDropdowns
+              alternateWordDropdowns: alternateWordDropdowns.map(({ position, ...rest }) => rest)
             })
           }
         }
@@ -130,9 +133,10 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
   useEffect(() => {
     if (editorRef.current && onDataChange) {
       const html = editorRef.current.innerHTML || ''
+      // Exclude position from saved data as it's UI state
       onDataChange({
         html,
-        alternateWordDropdowns
+        alternateWordDropdowns: alternateWordDropdowns.map(({ position, ...rest }) => rest)
       })
     }
   }, [alternateWordDropdowns, onDataChange])
@@ -291,10 +295,6 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
 
   const handleFormatBlock = (tag: string) => {
     executeCommand('formatBlock', tag)
-  }
-
-  const handleFontSize = (size: string) => {
-    executeCommand('fontSize', size)
   }
   return (
     <div className="text-snippet-component">

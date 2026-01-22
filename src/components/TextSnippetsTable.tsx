@@ -17,6 +17,7 @@ export interface TableRow {
         word: string
         isDefault: boolean
       }>
+      position?: { top: number; left: number } | null
     }>
   }
 }

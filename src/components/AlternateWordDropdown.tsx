@@ -13,7 +13,7 @@ interface AlternateWordDropdownProps {
   onClose: () => void
   onAddWord: (word: string, isDefault: boolean) => void
   existingWords: AlternateWord[]
-  onUpdateWord: (id: string, word: string, isDefault: boolean) => void
+  onUpdateWord?: (id: string, word: string, isDefault: boolean) => void
   onDeleteWord: (id: string) => void
   onReorderWords: (reorderedWords: AlternateWord[]) => void
 }
