@@ -1,0 +1,224 @@
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 750px;
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: -4px 0px 12px -5px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+  transition: width 0.3s ease-out;
+}
+
+.drawer-expanded {
+  width: 1200px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.drawer-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  align-items: center;
+  padding: 18px 24px;
+  flex-shrink: 0;
+  z-index: 3;
+}
+
+.drawer-header-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.drawer-title {
+  flex: 1;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.drawer-close-button {
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 50px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.drawer-close-button:hover {
+  background-color: #f7f7f7;
+}
+
+.drawer-close-button:active {
+  background-color: #e6e6e6;
+}
+
+.drawer-content {
+  flex: 1;
+  background-color: #f7f7f7;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 2;
+}
+
+.drawer-content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  min-height: 100%;
+}
+
+.tab-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 68px;
+  justify-content: center;
+}
+
+.tab-label-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.tab-label {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #1a1a1a;
+}
+
+.view-container {
+  flex: 1;
+  min-height: 200px;
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+}
+
+.view-fade-out {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.view-fade-in {
+  opacity: 0;
+  animation: fadeInView 0.2s ease-out 0.1s forwards;
+}
+
+@keyframes fadeInView {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.drawer-footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e6e6e6;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.drawer-footer-actions {
+  display: flex;
+  gap: 12px;
+  padding: 24px;
+  width: 100%;
+}
+
+.button-primary {
+  background-color: #181b1b;
+  color: #ffffff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.button-primary:hover {
+  opacity: 0.9;
+}
+
+.button-primary:active {
+  opacity: 0.8;
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: #181b1b;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.button-secondary:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+

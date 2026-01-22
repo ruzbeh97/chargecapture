@@ -1,0 +1,355 @@
+.procedure-codes-component {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.procedure-codes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.procedure-codes-title {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000000;
+  margin: 0;
+}
+
+.procedure-codes-delete-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  transition: background-color 0.2s;
+}
+
+.procedure-codes-delete-button:hover {
+  background-color: #f0f0f0;
+}
+
+.procedure-codes-delete-button:active {
+  background-color: #e6e6e6;
+}
+
+.procedure-codes-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.cpt-codes-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  height: 48px;
+  padding: 6px 8px 6px 12px;
+  gap: 8px;
+}
+
+.cpt-codes-selected {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cpt-code-badge {
+  background-color: #f2f2f2;
+  padding: 4.5px 14px;
+  border-radius: 100px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18.08px;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+.cpt-codes-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cpt-code-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.cpt-code-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.cpt-code-field {
+  width: 101px;
+  flex-shrink: 0;
+}
+
+.cpt-code-tooltip-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.cpt-code-input {
+  width: 100%;
+  height: 36px;
+  padding: 6px 8px 6px 12px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #808080;
+  outline: none;
+  cursor: default;
+}
+
+.cpt-code-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  white-space: normal;
+  max-width: 300px;
+  word-wrap: break-word;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cpt-code-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a1a1a;
+}
+
+.cpt-code-tooltip-wrapper:hover .cpt-code-tooltip {
+  opacity: 1;
+}
+
+.cpt-code-controls {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modifiers-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.modifier-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 2px 6px;
+  height: 28px;
+}
+
+.modifier-text {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #808080;
+  white-space: nowrap;
+}
+
+.cpt-code-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon-button-small {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  transition: background-color 0.2s;
+}
+
+.icon-button-small:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.icon-button-small:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.units-field {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 2px 6px;
+  height: 28px;
+  min-width: 76px;
+}
+
+.units-text {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #808080;
+  white-space: nowrap;
+}
+
+/* Modifier Combobox Styles */
+.modifier-combobox {
+  position: relative;
+}
+
+.modifier-combobox-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 2px 6px;
+  height: 28px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.modifier-combobox-input-wrapper:focus-within {
+  border-color: #1132ee;
+  background-color: #ffffff;
+}
+
+.modifier-combobox-input {
+  border: none;
+  background: transparent;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #1a1a1a;
+  outline: none;
+  width: 40px;
+  padding: 0;
+}
+
+.modifier-combobox-input::placeholder {
+  color: #808080;
+}
+
+.modifier-combobox-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.modifier-combobox-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 60px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.modifier-combobox-option {
+  padding: 6px 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modifier-combobox-option:hover {
+  background-color: #f7f7f7;
+}
+
+.modifier-combobox-option-empty {
+  color: #808080;
+  cursor: default;
+}
+
+.modifier-combobox-option-empty:hover {
+  background-color: transparent;
+}
+
+/* Units Input Styles */
+.units-input {
+  background-color: #f7f7f7;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 2px 6px;
+  height: 28px;
+  min-width: 76px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.units-input::placeholder {
+  color: #808080;
+}
+
+.units-input:focus {
+  border-color: #1132ee;
+  background-color: #ffffff;
+}
+

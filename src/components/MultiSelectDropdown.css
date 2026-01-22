@@ -1,0 +1,123 @@
+.multi-select-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.multi-select-input {
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 12px;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.multi-select-input:hover,
+.multi-select-input:focus-within {
+  border-color: #1132ee;
+}
+
+.multi-select-placeholder {
+  flex: 1;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #666666;
+}
+
+.multi-select-badges {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 6px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.multi-select-badges::-webkit-scrollbar {
+  display: none;
+}
+
+.multi-select-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #f2f2f2;
+  padding: 4.5px 8px 4.5px 14px;
+  border-radius: 100px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18.08px;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+.multi-select-badge-remove {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  transition: opacity 0.2s;
+}
+
+.multi-select-badge-remove:hover {
+  opacity: 0.7;
+}
+
+.multi-select-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.multi-select-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.multi-select-option {
+  padding: 8px 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.multi-select-option:hover {
+  background-color: #f7f7f7;
+}
+
+.multi-select-option.selected {
+  background-color: #f0f4ff;
+  color: #1132ee;
+}
+

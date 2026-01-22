@@ -1,0 +1,98 @@
+.advanced-text-snippet-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.advanced-form-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.advanced-form-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.advanced-form-label {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000000;
+}
+
+.advanced-configuration-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.configuration-container {
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 12px 12px 24px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.configuration-placeholder {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  height: 245px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.configuration-placeholder-text {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14.08px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #666666;
+  text-align: center;
+  margin: 0;
+}
+
+.configuration-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.configuration-item-wrapper {
+  width: 100%;
+}
+
+.configuration-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+}
+
+.advanced-switch-field {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.advanced-switch-label {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000000;
+  cursor: pointer;
+  user-select: none;
+}
