@@ -169,12 +169,37 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #666;
+  color: #1a1a1a;
   resize: none;
   background-color: transparent;
+  min-height: 100px;
+  overflow-y: auto;
 }
 
-.text-snippet-textarea::placeholder {
+.text-snippet-textarea:empty:before {
+  content: attr(data-placeholder);
   color: #666;
+  pointer-events: none;
+  display: block;
+}
+
+.alternate-word-dropdown-placeholder {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 2px;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #1a1a1a;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.alternate-word-dropdown-placeholder:hover {
+  background-color: #e6e6e6;
+  border-color: #999;
 }
 

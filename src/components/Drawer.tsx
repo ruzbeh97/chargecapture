@@ -1,49 +1,104 @@
-import { useState } from 'react'
-import TabSlider from './TabSlider'
-import BasicTextSnippetView from './BasicTextSnippetView'
+import { useState, useCallback, useEffect } from 'react'
 import AdvancedTextSnippetView from './AdvancedTextSnippetView'
+import { TableRow } from './TextSnippetsTable'
 import './Drawer.css'
 
 interface DrawerProps {
   isOpen: boolean
   onClose: () => void
+  onSave: (row: TableRow) => void
+  editingRow?: TableRow
 }
 
-type ViewType = 'basic' | 'advanced'
+// Helper to reset state
+const getInitialAdvancedViewData = (): AdvancedViewData => ({
+  phrase: '',
+  section: '',
+  userAccess: [],
+  useForEHRScribe: false,
+  textSnippetContent: '',
+  textSnippetData: undefined
+})
 
-function Drawer({ isOpen, onClose }: DrawerProps) {
-  const [activeView, setActiveView] = useState<ViewType>('basic')
-  const [displayView, setDisplayView] = useState<ViewType>('basic')
-  const [isFadingOut, setIsFadingOut] = useState(false)
-  const [isFadingIn, setIsFadingIn] = useState(false)
+interface AdvancedViewData {
+  phrase: string
+  section: string
+  userAccess: string[]
+  useForEHRScribe: boolean
+  textSnippetContent: string
+  textSnippetData?: {
+    html: string
+    alternateWordDropdowns: Array<{
+      id: string
+      words: Array<{
+        id: string
+        word: string
+        isDefault: boolean
+      }>
+    }>
+  }
+}
+
+function Drawer({ isOpen, onClose, onSave, editingRow }: DrawerProps) {
   const [hasOrderSet, setHasOrderSet] = useState(false)
+  const [advancedViewData, setAdvancedViewData] = useState<AdvancedViewData>(getInitialAdvancedViewData())
 
-  const handleViewChange = (value: ViewType) => {
-    if (value === activeView || isFadingOut || isFadingIn) return
-    
-    // Step 1: Fade out current view (200ms)
-    setIsFadingOut(true)
-    
-    // Step 2: After fade out completes, change view
-    setTimeout(() => {
-      setActiveView(value)
-      setDisplayView(value)
-      setIsFadingOut(false)
-      
-      // Reset drawer expansion when switching views
+  // Use useCallback to stabilize the callback
+  const handleAdvancedDataChange = useCallback((data: AdvancedViewData) => {
+    setAdvancedViewData(data)
+  }, [])
+
+  // Reset or populate state when drawer opens
+  useEffect(() => {
+    if (isOpen) {
+      if (editingRow) {
+        // Populate with editing row data
+        const userAccessArray = editingRow.users === 'All' ? [] : editingRow.users.split(', ').filter(u => u.trim() !== '')
+        setAdvancedViewData({
+          phrase: editingRow.phrase || '',
+          section: editingRow.section || '',
+          userAccess: userAccessArray,
+          useForEHRScribe: editingRow.useForEHRScribe || false,
+          textSnippetContent: editingRow.procedureDoc || '',
+          textSnippetData: editingRow.textSnippetData
+        })
+      } else {
+        // Reset to initial state
+        setAdvancedViewData(getInitialAdvancedViewData())
+      }
       setHasOrderSet(false)
-      
-      // Step 3: Set fade-in flag (CSS animation-delay will handle timing)
-      setIsFadingIn(true)
-      
-      // Step 4: After fade in completes (200ms animation + 100ms delay = 300ms total), reset state
-      setTimeout(() => {
-        setIsFadingIn(false)
-      }, 300)
-    }, 200)
+    }
+  }, [isOpen, editingRow])
+
+  const handleSave = () => {
+    // Format user access array to string
+    const usersString = advancedViewData.userAccess.length > 0
+      ? advancedViewData.userAccess.join(', ')
+      : 'All'
+    
+    // Extract text from HTML for display in table
+    let displayText = advancedViewData.textSnippetContent || 'Text Snippet'
+    if (advancedViewData.textSnippetData?.html) {
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = advancedViewData.textSnippetData.html
+      displayText = tempDiv.innerText || displayText
+    }
+    
+    const newRow: TableRow = {
+      id: editingRow ? editingRow.id : Date.now().toString(),
+      phrase: advancedViewData.phrase || 'Phrase/ Trigger',
+      procedureDoc: displayText, // Display text in table, but save HTML in textSnippetData
+      users: usersString,
+      section: advancedViewData.section || '',
+      useForEHRScribe: advancedViewData.useForEHRScribe,
+      textSnippetData: advancedViewData.textSnippetData
+    }
+    onSave(newRow)
   }
 
-  if (!isOpen) return null
+  if (!isOpen) {
+    return null
+  }
 
   return (
     <>
@@ -51,9 +106,7 @@ function Drawer({ isOpen, onClose }: DrawerProps) {
       <div className={`drawer ${hasOrderSet ? 'drawer-expanded' : ''}`}>
         <div className="drawer-header">
           <div className="drawer-header-content">
-            <h2 className="drawer-title">
-              {activeView === 'advanced' ? 'Add Advanced Text Snippet' : 'Add Text Snippet'}
-            </h2>
+            <h2 className="drawer-title">{editingRow ? 'Edit Text Snippet' : 'Add Text Snippet'}</h2>
           </div>
           <button className="drawer-close-button" onClick={onClose}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,30 +117,28 @@ function Drawer({ isOpen, onClose }: DrawerProps) {
         
         <div className="drawer-content">
           <div className="drawer-content-inner">
-            <div className="tab-section">
-              <div className="tab-label-wrapper">
-                <label className="tab-label">Type of Snippet</label>
-              </div>
-              <TabSlider
-                options={[
-                  { value: 'basic', label: 'Standard Text Snippet' },
-                  { value: 'advanced', label: 'Advanced Text Snippet' }
-                ]}
-                activeValue={activeView}
-                onChange={(value) => handleViewChange(value as ViewType)}
-              />
-            </div>
-            
-            <div className={`view-container ${isFadingOut ? 'view-fade-out' : isFadingIn ? 'view-fade-in' : ''}`}>
-              {displayView === 'basic' && <BasicTextSnippetView />}
-              {displayView === 'advanced' && <AdvancedTextSnippetView onOrderSetAdded={setHasOrderSet} />}
-            </div>
+            <AdvancedTextSnippetView 
+              key={editingRow?.id || 'new'}
+              onOrderSetAdded={setHasOrderSet}
+              onDataChange={handleAdvancedDataChange}
+              initialData={editingRow ? {
+                phrase: editingRow.phrase || '',
+                section: editingRow.section || '',
+                userAccess: editingRow.users === 'All' ? [] : editingRow.users.split(', ').filter(u => u.trim() !== ''),
+                useForEHRScribe: editingRow.useForEHRScribe || false,
+                textSnippetContent: editingRow.textSnippetData?.html || editingRow.procedureDoc || '',
+                textSnippetData: editingRow.textSnippetData || (editingRow.procedureDoc ? {
+                  html: editingRow.procedureDoc,
+                  alternateWordDropdowns: []
+                } : undefined)
+              } : undefined}
+            />
           </div>
         </div>
         
         <div className="drawer-footer">
           <div className="drawer-footer-actions">
-            <button className="button-primary">Save</button>
+            <button type="button" className="button-primary" onClick={handleSave}>Save</button>
             <button className="button-secondary" onClick={onClose}>Cancel</button>
           </div>
         </div>

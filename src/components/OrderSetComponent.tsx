@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Dropdown from './Dropdown'
+import MultiSelectDropdown from './MultiSelectDropdown'
 import OrderDetails from './OrderDetails'
 import './OrderSetComponent.css'
 
@@ -8,15 +8,23 @@ interface OrderSetComponentProps {
 }
 
 function OrderSetComponent({ onRemove }: OrderSetComponentProps) {
-  const [orderValue, setOrderValue] = useState('')
+  const [selectedOrders, setSelectedOrders] = useState<string[]>([])
 
   const orderOptions = [
-    'Order A Name',
-    'Order Name 1',
-    'Order Name 2',
-    'Order Set Name 1',
-    'Order Set Name 2'
+    'Inject VISCO',
+    'Physical Therapy Referral',
+    'MRI Shoulder',
+    'X-Ray Knee',
+    'DME Brace Order'
   ]
+
+  const handleOrderChange = (selected: string[]) => {
+    setSelectedOrders(selected)
+  }
+
+  const handleRemoveOrder = (orderToRemove: string) => {
+    setSelectedOrders(selectedOrders.filter(order => order !== orderToRemove))
+  }
 
   return (
     <div className="order-set-component">
@@ -35,15 +43,22 @@ function OrderSetComponent({ onRemove }: OrderSetComponentProps) {
         )}
       </div>
       <div className="order-set-content">
-        <Dropdown
+        <MultiSelectDropdown
           placeholder="Add and order / orderset"
-          value={orderValue}
-          onChange={setOrderValue}
+          selectedValues={selectedOrders}
+          onChange={handleOrderChange}
           options={orderOptions}
         />
-        {orderValue && (
-          <div className="order-details-wrapper">
-            <OrderDetails orderName={orderValue} />
+        {selectedOrders.length > 0 && (
+          <div className="selected-orders-list">
+            {selectedOrders.map((orderName) => (
+              <div key={orderName} className="order-item-wrapper">
+                <OrderDetails 
+                  orderName={orderName} 
+                  onDelete={() => handleRemoveOrder(orderName)}
+                />
+              </div>
+            ))}
           </div>
         )}
       </div>

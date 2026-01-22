@@ -57,3 +57,17 @@
   padding: 6px 8px 6px 12px;
 }
 
+.selected-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.order-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+

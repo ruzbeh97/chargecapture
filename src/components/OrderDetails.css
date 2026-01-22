@@ -5,6 +5,14 @@
   width: 100%;
 }
 
+.order-details-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
 .order-details-title {
   font-family: 'Satoshi', sans-serif;
   font-size: 16px;
@@ -12,6 +20,28 @@
   line-height: 24px;
   color: #000000;
   margin: 0;
+  flex: 1;
+}
+
+.order-details-delete-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.order-details-delete-button:hover {
+  background-color: #f0f0f0;
+}
+
+.order-details-delete-button:active {
+  background-color: #e6e6e6;
 }
 
 .order-details-sections {
@@ -440,17 +470,19 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 2px 12px;
+  padding: 4px 12px;
+  height: 28px;
   background-color: #ffffff;
   border: 1px solid #e6e6e6;
   border-radius: 50px;
   font-family: 'Satoshi', sans-serif;
   font-size: 14.08px;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 20px;
   color: #1132ee;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .add-word-alternative-button:hover {
@@ -477,9 +509,35 @@
   color: #666;
   resize: none;
   background-color: transparent;
+  min-height: 200px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
-.procedure-documentation-textarea::placeholder {
+.procedure-documentation-textarea:empty:before {
+  content: attr(data-placeholder);
   color: #666;
+  pointer-events: none;
+}
+
+.alternate-word-dropdown-placeholder {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 0 2px;
+  background-color: #f0f0f0;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #1a1a1a;
+  user-select: none;
+}
+
+.alternate-word-dropdown-placeholder:hover {
+  background-color: #e6e6e6;
+  border-color: #999;
 }
 

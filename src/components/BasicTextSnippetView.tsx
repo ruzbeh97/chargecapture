@@ -1,17 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TextField from './TextField'
 import TextArea from './TextArea'
 import Dropdown from './Dropdown'
 import Switch from './Switch'
 import './BasicTextSnippetView.css'
 
-function BasicTextSnippetView() {
+interface BasicTextSnippetViewProps {
+  onDataChange?: (data: {
+    phrase: string
+    textSnippet: string
+    groupName: string
+    appointmentType: string
+    macroType: string
+    useForEHRScribe: boolean
+  }) => void
+}
+
+function BasicTextSnippetView({ onDataChange }: BasicTextSnippetViewProps) {
   const [phrase, setPhrase] = useState('')
   const [textSnippet, setTextSnippet] = useState('')
   const [groupName, setGroupName] = useState('')
   const [appointmentType, setAppointmentType] = useState('')
   const [macroType, setMacroType] = useState('')
   const [useForEHRScribe, setUseForEHRScribe] = useState(false)
+
+  useEffect(() => {
+    if (onDataChange) {
+      const data = {
+        phrase,
+        textSnippet,
+        groupName,
+        appointmentType,
+        macroType,
+        useForEHRScribe
+      }
+      console.log('BasicTextSnippetView onDataChange called with:', data)
+      onDataChange(data)
+    }
+  }, [phrase, textSnippet, groupName, appointmentType, macroType, useForEHRScribe, onDataChange])
 
   // Sample data for dropdowns
   const groupNames = [

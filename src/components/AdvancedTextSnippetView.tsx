@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TextField from './TextField'
 import Dropdown from './Dropdown'
+import MultiSelectDropdown from './MultiSelectDropdown'
 import Switch from './Switch'
 import Chip from './Chip'
 import TextSnippetComponent from './TextSnippetComponent'
@@ -16,14 +17,58 @@ type ConfigurationItem = {
 
 interface AdvancedTextSnippetViewProps {
   onOrderSetAdded?: (hasOrderSet: boolean) => void
+  onDataChange?: (data: {
+    phrase: string
+    section: string
+    userAccess: string[]
+    useForEHRScribe: boolean
+    textSnippetContent: string
+    textSnippetData?: {
+      html: string
+      alternateWordDropdowns: Array<{
+        id: string
+        words: Array<{
+          id: string
+          word: string
+          isDefault: boolean
+        }>
+      }>
+    }
+  }) => void
+  initialData?: {
+    phrase: string
+    section: string
+    userAccess: string[]
+    useForEHRScribe: boolean
+    textSnippetContent: string
+    textSnippetData?: {
+      html: string
+      alternateWordDropdowns: Array<{
+        id: string
+        words: Array<{
+          id: string
+          word: string
+          isDefault: boolean
+        }>
+      }>
+    }
+  }
 }
 
-function AdvancedTextSnippetView({ onOrderSetAdded }: AdvancedTextSnippetViewProps) {
-  const [phrase, setPhrase] = useState('')
-  const [section, setSection] = useState('')
-  const [userAccess, setUserAccess] = useState('')
-  const [useForEHRScribe, setUseForEHRScribe] = useState(false)
-  const [configurationItems, setConfigurationItems] = useState<ConfigurationItem[]>([])
+function AdvancedTextSnippetView({ onOrderSetAdded, onDataChange, initialData }: AdvancedTextSnippetViewProps) {
+  const [phrase, setPhrase] = useState(initialData?.phrase || '')
+  const [section, setSection] = useState(initialData?.section || '')
+  const [userAccess, setUserAccess] = useState<string[]>(initialData?.userAccess || [])
+  const [useForEHRScribe, setUseForEHRScribe] = useState(initialData?.useForEHRScribe || false)
+  const [configurationItems, setConfigurationItems] = useState<ConfigurationItem[]>(() => {
+    // Initialize with text snippet component if there's initial content
+    if (initialData?.textSnippetContent) {
+      return [{ id: Date.now().toString(), type: 'text-snippet' }]
+    }
+    return []
+  })
+  const [textSnippetContent, setTextSnippetContent] = useState(initialData?.textSnippetContent || '')
+  const [textSnippetData, setTextSnippetData] = useState<{ html: string; alternateWordDropdowns: any[] } | null>(null)
 
   const sections = [
     'Assessment',
@@ -34,10 +79,26 @@ function AdvancedTextSnippetView({ onOrderSetAdded }: AdvancedTextSnippetViewPro
   ]
 
   const userAccessOptions = [
-    'All Users',
-    'Admin Only',
-    'Physicians',
-    'Nurses'
+    'All',
+    'Dr. Smith',
+    'Dr. Johnson',
+    'Dr. Williams',
+    'Dr. Brown',
+    'Dr. Jones',
+    'Dr. Garcia',
+    'Dr. Miller',
+    'Dr. Davis',
+    'Dr. Rodriguez',
+    'Dr. Martinez',
+    'Dr. Hernandez',
+    'Dr. Lopez',
+    'Dr. Wilson',
+    'Dr. Anderson',
+    'Dr. Thomas',
+    'Dr. Taylor',
+    'Dr. Moore',
+    'Dr. Jackson',
+    'Dr. Martin'
   ]
 
   const handleChipClick = (chipType: string) => {
@@ -81,12 +142,31 @@ function AdvancedTextSnippetView({ onOrderSetAdded }: AdvancedTextSnippetViewPro
     const updatedItems = configurationItems.filter(item => item.id !== id)
     setConfigurationItems(updatedItems)
     
+    // Clear text snippet content if text snippet component was removed
+    if (itemToRemove?.type === 'text-snippet') {
+      setTextSnippetContent('')
+    }
+    
     // Notify drawer if Order/Order Set component was removed
     if (itemToRemove?.type === 'order-set' && onOrderSetAdded) {
       const hasOrderSet = updatedItems.some(item => item.type === 'order-set')
       onOrderSetAdded(hasOrderSet)
     }
   }
+
+  useEffect(() => {
+    if (onDataChange) {
+      const data = {
+        phrase,
+        section,
+        userAccess,
+        useForEHRScribe,
+        textSnippetContent: textSnippetData?.html || textSnippetContent,
+        textSnippetData: textSnippetData || undefined
+      }
+      onDataChange(data)
+    }
+  }, [phrase, section, userAccess, useForEHRScribe, textSnippetContent, textSnippetData, onDataChange])
 
   const PlusIcon = () => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +186,7 @@ function AdvancedTextSnippetView({ onOrderSetAdded }: AdvancedTextSnippetViewPro
           />
         </div>
         <div className="advanced-form-field">
-          <label className="advanced-form-label">Available Sections of Visit Note</label>
+          <label className="advanced-form-label">Sections of Visit Note</label>
           <Dropdown
             placeholder="Select a Section"
             value={section}
@@ -116,9 +196,9 @@ function AdvancedTextSnippetView({ onOrderSetAdded }: AdvancedTextSnippetViewPro
         </div>
         <div className="advanced-form-field">
           <label className="advanced-form-label">User Access</label>
-          <Dropdown
-            placeholder="Select a user"
-            value={userAccess}
+          <MultiSelectDropdown
+            placeholder="Select users"
+            selectedValues={userAccess}
             onChange={setUserAccess}
             options={userAccessOptions}
           />
@@ -139,7 +219,27 @@ function AdvancedTextSnippetView({ onOrderSetAdded }: AdvancedTextSnippetViewPro
               {configurationItems.map((item) => (
                 <div key={item.id} className="configuration-item-wrapper">
                   {item.type === 'text-snippet' && (
-                    <TextSnippetComponent onRemove={() => handleRemoveItem(item.id)} />
+                    <TextSnippetComponent 
+                      key={`text-snippet-${initialData?.textSnippetContent || 'new'}-${item.id}`}
+                      onRemove={() => handleRemoveItem(item.id)}
+                      onContentChange={(content) => {
+                        setTextSnippetContent(content)
+                      }}
+                      onDataChange={(data) => {
+                        setTextSnippetData(data)
+                        // Also update text content for display
+                        if (data.html) {
+                          const tempDiv = document.createElement('div')
+                          tempDiv.innerHTML = data.html
+                          setTextSnippetContent(tempDiv.innerText || '')
+                        }
+                      }}
+                      initialContent={initialData?.textSnippetContent}
+                      initialData={initialData?.textSnippetData || (initialData?.textSnippetContent ? {
+                        html: initialData.textSnippetContent,
+                        alternateWordDropdowns: []
+                      } : undefined)}
+                    />
                   )}
                   {item.type === 'order-set' && (
                     <OrderSetComponent 
