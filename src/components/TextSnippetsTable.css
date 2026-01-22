@@ -167,7 +167,13 @@
 }
 
 .table-header-cell:nth-child(5) {
-  width: auto;
+  width: 190px;
+  position: sticky;
+  right: 0;
+  background-color: #f7f7f7;
+  z-index: 10;
+  text-align: left;
+  padding-left: 16px;
 }
 
 .table-row {
@@ -176,6 +182,10 @@
 }
 
 .table-row:hover {
+  background-color: #fafafa;
+}
+
+.table-row:hover .table-cell-actions {
   background-color: #fafafa;
 }
 
@@ -206,7 +216,16 @@
 .table-cell-actions {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
+  position: sticky;
+  right: 0;
+  background-color: #ffffff;
+  z-index: 5;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 190px;
+  box-sizing: border-box;
 }
 
 .action-icons {
