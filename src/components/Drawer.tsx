@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import TabSlider from './TabSlider'
 import BasicTextSnippetView from './BasicTextSnippetView'
 import AdvancedTextSnippetView from './AdvancedTextSnippetView'
