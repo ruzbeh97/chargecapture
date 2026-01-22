@@ -158,8 +158,8 @@ function AlternateWordDropdown({
           <input
             type="text"
             className="alternate-word-dropdown-input"
-            placeholder="Alternate Word Settings"
-            value="Alternate Word Settings"
+            placeholder="Magic Word Settings"
+            value="Magic Word Settings"
             readOnly
           />
           <div className="alternate-word-dropdown-arrow">

@@ -43,9 +43,9 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
     // Only initialize if this is a new initialData value
     if (currentInitialDataKey && currentInitialDataKey !== lastInitialDataRef.current && editorRef.current) {
       if (initialData && initialData.html) {
-        // Restore HTML content and alternate word dropdowns
+        // Restore HTML content and magic word dropdowns
         editorRef.current.innerHTML = initialData.html
-        // Restore alternate word dropdowns state
+        // Restore magic word dropdowns state
         if (initialData.alternateWordDropdowns && initialData.alternateWordDropdowns.length > 0) {
           setAlternateWordDropdowns(initialData.alternateWordDropdowns)
         }
@@ -104,7 +104,7 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
             onContentChange(text)
           }
           
-          // Update full data including HTML and alternate words
+          // Update full data including HTML and magic words
           if (onDataChange) {
             // Use current alternateWordDropdowns from state
             onDataChange({
@@ -147,7 +147,7 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
         if (defaultWord) {
           placeholder.textContent = defaultWord.word
         } else {
-          placeholder.textContent = '[Alternate Word]'
+          placeholder.textContent = '[Magic Word]'
         }
       }
     })
@@ -194,7 +194,7 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
           const dropdownSpan = document.createElement('span')
           dropdownSpan.className = 'alternate-word-dropdown-placeholder'
           dropdownSpan.setAttribute('data-dropdown-id', dropdownId)
-          dropdownSpan.textContent = '[Alternate Word]'
+          dropdownSpan.textContent = '[Magic Word]'
           dropdownSpan.contentEditable = 'false'
           dropdownSpan.style.display = 'inline-block'
           dropdownSpan.style.padding = '2px 8px'
@@ -486,7 +486,7 @@ function TextSnippetComponent({ onRemove, onContentChange, onDataChange, initial
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 2.91667V11.0833M2.91667 7H11.0833" stroke="#1132ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span>Alternate Word</span>
+              <span>Magic Word</span>
             </button>
           </div>
         </div>

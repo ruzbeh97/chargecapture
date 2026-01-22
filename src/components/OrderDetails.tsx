@@ -272,7 +272,7 @@ function OrderDetails({ orderName, onDelete }: OrderDetailsProps) {
         if (defaultWord) {
           placeholder.textContent = defaultWord.word
         } else {
-          placeholder.textContent = '[Alternate Word]'
+          placeholder.textContent = '[Magic Word]'
         }
       }
     })
@@ -512,7 +512,7 @@ function OrderDetails({ orderName, onDelete }: OrderDetailsProps) {
                           const dropdownSpan = document.createElement('span')
                           dropdownSpan.className = 'alternate-word-dropdown-placeholder'
                           dropdownSpan.setAttribute('data-dropdown-id', dropdownId)
-                          dropdownSpan.textContent = '[Alternate Word]'
+                          dropdownSpan.textContent = '[Magic Word]'
                           dropdownSpan.contentEditable = 'false'
                           dropdownSpan.style.display = 'inline-block'
                           dropdownSpan.style.padding = '2px 8px'
@@ -555,7 +555,7 @@ function OrderDetails({ orderName, onDelete }: OrderDetailsProps) {
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 2.91667V11.0833M2.91667 7H11.0833" stroke="#1132ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  <span>Alternate Word</span>
+                  <span>Magic Word</span>
                 </button>
               </div>
             </div>
